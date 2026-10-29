@@ -11,6 +11,7 @@ const api = axios.create({
 });
 
 const authTokenKey = 'groceryBillingToken';
+const logoSrc = `${import.meta.env.BASE_URL}grocery-billing-logo.png`;
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem(authTokenKey);
@@ -100,6 +101,7 @@ function AuthPage({ onAuthenticated, initialError = '' }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
       <section className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8">
+        <img src={logoSrc} alt="Grocery Billing" className="mx-auto mb-4 h-36 w-36 object-contain" />
         <p className="text-xs uppercase tracking-[0.3em] text-sky-600">Weekly Market Billing</p>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900">
           {isRegistering ? 'Create your account' : 'Welcome back'}
@@ -521,9 +523,12 @@ function App() {
       <div className="mx-auto max-w-5xl px-4 pb-24 pt-6 sm:px-6 lg:px-8">
         <header className="sticky top-0 z-20 rounded-3xl border border-slate-200 bg-white/95 px-4 py-4 shadow-soft backdrop-blur-md">
           <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-sky-600">Weekly Market Billing</p>
-              <h1 className="mt-2 text-2xl font-semibold tracking-tight">Grocery / Pulses Shop</h1>
+            <div className="flex min-w-0 items-center gap-3">
+              <img src={logoSrc} alt="Grocery Billing" className="h-14 w-14 shrink-0 rounded-2xl object-contain" />
+              <div className="min-w-0">
+                <p className="text-xs uppercase tracking-[0.3em] text-sky-600">Weekly Market Billing</p>
+                <h1 className="mt-2 text-xl font-semibold tracking-tight sm:text-2xl">Grocery / Pulses Shop</h1>
+              </div>
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden text-sm font-medium text-slate-600 sm:inline">{user.name}</span>
@@ -874,6 +879,7 @@ function App() {
         <section id="printable-bill" className="hidden print:block" aria-hidden="true">
           <div className="mx-auto max-w-[80mm] p-4 font-mono text-xs text-black">
             <header className="border-b border-dashed border-black pb-3 text-center">
+              <img src={logoSrc} alt="Grocery Billing" className="mx-auto mb-2 h-24 w-24 object-contain" />
               <h1 className="text-lg font-bold">Babu Grocery Shop</h1>
               <p>Grocery / Pulses Shop</p>
               <p className="mt-2">{new Date().toLocaleString('en-IN')}</p>
