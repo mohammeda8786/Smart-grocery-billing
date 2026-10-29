@@ -71,7 +71,14 @@ function AuthPage({ onAuthenticated, initialError = '' }) {
       }
     } catch (err) {
       console.error(err);
-      setError(err?.response?.data?.message || 'Unable to authenticate. Please try again.');
+      const apiMessage = err?.response?.data?.message;
+      if (apiMessage) {
+        setError(apiMessage);
+      } else if (!err.response || err.response.status === 404) {
+        setError('Cannot reach the authentication API. Deploy the backend and set VITE_API_URL to its URL ending in /api.');
+      } else {
+        setError('Unable to authenticate. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

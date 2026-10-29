@@ -23,8 +23,22 @@ A mobile-first billing application for seasonal grocery and pulses shops. Built 
 
 1. Open a terminal in `frontend/`
 2. Run `npm install`
-3. Create a `.env` file from `.env.example` if needed
+3. Create a `.env` file from `.env.example`
 4. Start app: `npm run dev`
+
+## Production Deployment
+
+Pushing the repository to GitHub does not start the Express API. Deploy the `backend/` directory to a Node.js host and configure:
+
+- `MONGODB_URI` - connection string for the production MongoDB database
+- `JWT_SECRET` - random secret of at least 32 characters
+- `NODE_ENV=production`
+
+Set the backend host's start command to `npm start`. Confirm the deployed backend responds at `/` before configuring the frontend.
+
+Deploy `frontend/` as a static Vite site. Set `VITE_API_URL` in the frontend host's build environment to the full backend API URL, for example `https://your-backend-host.example/api`, and rebuild/redeploy the frontend. `VITE_API_URL` is embedded during the frontend build; changing it only at runtime will not update the built site. The Vite `/api` proxy is for local development only and is not included in production builds.
+
+The API enables cross-origin requests by default. If your backend host or deployment proxy applies additional CORS restrictions, allow the frontend's production origin.
 
 ## API Endpoints
 
@@ -53,4 +67,4 @@ A mobile-first billing application for seasonal grocery and pulses shops. Built 
 - The backend uses free WhatsApp link generation (`wa.me`)
 - Ensure MongoDB is reachable from `MONGODB_URI`
 - The demo account is created automatically by `npm run dev` only; production mode does not create it
-- The frontend defaults to `http://localhost:5000/api` if `VITE_API_URL` is not set
+- The frontend's `.env.example` points to the local backend; production builds must use the deployed backend URL for `VITE_API_URL`
