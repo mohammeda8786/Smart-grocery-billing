@@ -32,3 +32,27 @@ input, button, select {
   background: #cbd5e1;
   border-radius: 9999px;
 }
+
+@media print {
+  @page {
+    margin: 5mm;
+    size: 80mm auto;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #printable-bill,
+  #printable-bill * {
+    visibility: visible !important;
+  }
+
+  #printable-bill {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80mm;
+  }
+}

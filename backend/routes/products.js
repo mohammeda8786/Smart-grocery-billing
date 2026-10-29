@@ -1,16 +1,20 @@
 const express = require('express');
 const Product = require('../models/Product');
+const authenticate = require('../middleware/authenticate');
 const router = express.Router();
+
+router.use(authenticate);
 
 // GET /api/products?search=
 router.get('/', async (req, res) => {
   try {
     const search = String(req.query.search || '').trim();
+    const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const filter = search
       ? {
           $or: [
-            { name: { $regex: search, $options: 'i' } },
-            { tamilName: { $regex: search, $options: 'i' } },
+            { name: { $regex: escapedSearch, $options: 'i' } },
+            { tamilName: { $regex: escapedSearch, $options: 'i' } },
           ],
         }
       : {};
